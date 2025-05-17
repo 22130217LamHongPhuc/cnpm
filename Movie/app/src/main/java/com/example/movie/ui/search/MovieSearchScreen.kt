@@ -25,17 +25,17 @@ import com.example.movie.ui.movie.CardMovieSearch
 
 @Composable
 fun MovieSearchScreen(query:String,
+    // 1.7 khoi tao viewmodel nhu controller
                       viewModel:MovieSearchViewModel = hiltViewModel(),
                       navController: NavController){
-
 
     val moviePagingItems = viewModel.searchMoviePagingFlow.collectAsLazyPagingItems()
 
 
-
-
     LaunchedEffect(Unit){
         Log.d("search",query+"Unit")
+        // 1.7 goi ham trong view model de setquery tim kiem
+
         viewModel.setQuery(query)
     }
 
@@ -47,6 +47,7 @@ fun MovieSearchScreen(query:String,
               color = Color.Red
           )
       }else{
+          // 1.11  hien thi danh sách phim từ api cho người dùng
           LazyColumn (modifier = Modifier
               .fillMaxSize()
               .padding(10.dp),

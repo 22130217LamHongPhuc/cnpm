@@ -31,7 +31,7 @@ import com.example.movie.movie.domain.model.MovieSearch
 import com.example.movie.util.K
 
 @Composable
-fun CardMovieBasic(movie: Any, navController: NavController) {
+fun CardMovieBasic(movie: Any, navControlnavControllerler: NavController) {
     val widthScreen = (LocalConfiguration.current.screenWidthDp / 3 - 4).dp
     val aspectRatio = 2 / 3f
 
@@ -57,6 +57,8 @@ fun CardMovieBasic(movie: Any, navController: NavController) {
             .width(widthScreen)
             .aspectRatio(aspectRatio)
             .clickable {
+
+                //1.4 chuyen sang man hinh  movie detail
                 navController.navigate("detail/$movieSlug/$movieId")
             }
     ) {

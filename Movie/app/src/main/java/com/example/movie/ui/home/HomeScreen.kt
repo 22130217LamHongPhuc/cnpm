@@ -9,14 +9,11 @@ import android.os.Build
 import android.speech.RecognizerIntent
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.compose.BackHandler
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -72,7 +69,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -85,7 +81,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.key.Key.Companion.Home
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
@@ -101,20 +96,14 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import com.example.movie.R
 import com.example.movie.movie.domain.model.CompileTypeItem
 import com.example.movie.movie.domain.model.Movie
 import com.example.movie.movie.domain.model.MovieSearch
-import com.example.movie.navigateTab
 import com.example.movie.ui.category.TypeMovieScreen
 import com.example.movie.ui.chatbot.ChatbotScreen
-import com.example.movie.ui.chatbot.FavoriteScreen
 import com.example.movie.ui.indicatorBanner
 import com.example.movie.ui.movie.CardMovieBasic
 import com.example.movie.ui.movie.calculateGridHeight
@@ -123,24 +112,22 @@ import com.example.movie.util.K
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Locale
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.graphics.toArgb
-import androidx.core.view.WindowCompat
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.placeholder
 import com.google.accompanist.placeholder.shimmer
 
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-
 @RequiresApi(Build.VERSION_CODES.R)
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(),navController: NavController,navController_child: NavHostController) {
+fun MainScreen(viewModel: HomeViewModel = hiltViewModel(), navController: NavController, navController_child: NavHostController) {
+
+
+    // 1. nguoi dung truy cap vao trang MainScreen
+
+    // 1.01 khoi tao giao dien MainScreen
 
     val statePager = rememberPagerState(0) {
         4
@@ -160,25 +147,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(),navController: NavCont
     val window = context.window
 
 
-//    LaunchedEffect(Unit ){
-//        window.statusBarColor = Color.Black.toArgb()
-//        WindowCompat.setDecorFitsSystemWindows(window,false)
-//    }
 
-
-    // Xử lý nút back
-//    BackHandler(enabled = currentRoute != "home") {
-//        // Kiểm tra xem home có trong back stack không
-//        if (navController_child.popBackStack("home", inclusive = false)) {
-//            selectedTab.intValue = 0
-//        } else {
-//            navController_child.navigate("home") {
-//                popUpTo(navController_child.graph.startDestinationId)
-//                launchSingleTop = true
-//            }
-//            selectedTab.intValue = 0
-//        }
-//    }
     val saveableStateHolder = rememberSaveableStateHolder()
 
 
@@ -200,26 +169,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(),navController: NavCont
                 scope.launch {
                     statePager.animateScrollToPage(selectedIndex)
                 }
-//                when (selectedIndex) {
-//                    0 -> navController_child.navigate(route= "home_child",
-//
-//                    ) {
-//                        popUpTo(navController_child.graph.startDestinationId)
-//                        launchSingleTop = true
-//                    }
-//                    1 -> navController_child.navigate("type_movie") {
-//                        popUpTo(navController_child.graph.startDestinationId)
-//                        launchSingleTop = true
-//                    }
-//                    2 -> navController_child.navigate("chatbot") {
-//                        popUpTo(navController_child.graph.startDestinationId)
-//                        launchSingleTop = true
-//                    }
-//                    3 -> navController_child.navigate("profile") {
-//                        popUpTo(navController_child.graph.startDestinationId)
-//                        launchSingleTop = true
-//                    }
-//                }
+
             }
         }, containerColor = Color.Black
     ) {
@@ -228,39 +178,6 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(),navController: NavCont
             .fillMaxSize()
             .background(Color.Black)
             .padding(paddingValues)){
-
-//            NavHost(navController = navController_child, startDestination = "home_child") {
-//                composable("home_child", enterTransition = { EnterTransition.None },
-//                    exitTransition = { ExitTransition.None },
-//                    popEnterTransition = { EnterTransition.None },
-//                    popExitTransition = { ExitTransition.None }) {
-//                    Home(navController = navController) { slugType ->
-//                        navController.navigate("compile_type/$slugType")
-//                    }
-//                }
-//                composable("type_movie",
-//                    enterTransition = { EnterTransition.None },
-//                    exitTransition = { ExitTransition.None },
-//                    popEnterTransition = { EnterTransition.None },
-//                    popExitTransition = { ExitTransition.None }) {
-//                    TypeMovieScreen(navController) { type, slug ->
-//                        navController.navigate("movie_type/$type/$slug")
-//                    }
-//                }
-//                composable("chatbot",
-//                    enterTransition = { EnterTransition.None },
-//                    exitTransition = { ExitTransition.None },
-//                    popEnterTransition = { EnterTransition.None },
-//                    popExitTransition = { ExitTransition.None }) { ChatbotScreen() }
-//                composable("profile",
-//                    enterTransition = { EnterTransition.None },
-//                    exitTransition = { ExitTransition.None },
-//                    popEnterTransition = { EnterTransition.None },
-//                    popExitTransition = { ExitTransition.None }) { ProfileScreen(navController) }
-//            }
-
-            //1 .truy cap vao homepage
-
         HorizontalPager(state = statePager, modifier = Modifier.fillMaxSize(),
             key = {
                   index ->  index.hashCode()
@@ -271,6 +188,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(),navController: NavCont
             when(page){
                 0 -> saveableStateHolder.SaveableStateProvider("home") {
 
+                    //1 .2truy cap vao homepage
 
                     Home(navController = navController) { slugType ->
                         navController.navigate("compile_type/$slugType")
@@ -281,7 +199,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(),navController: NavCont
                 }
                 2 -> saveableStateHolder.SaveableStateProvider("profile") {
 
-                    //1.1 truy cap vao toi chatboxScreen
+                    //1.4 truy cap vao toi chatboxScreen
 
                     saveableStateHolder.SaveableStateProvider("chatbot") {
                         ChatbotScreen()
@@ -303,6 +221,7 @@ fun HomeScreen(viewModel: HomeViewModel = hiltViewModel(),navController: NavCont
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Home(viewModel: HomeViewModel = hiltViewModel(),navController: NavController,onChange: (String) -> Unit){
+
     val listImg = remember {
         listOf(R.drawable.img_2, R.drawable.img_3, R.drawable.img_4, R.drawable.img_5)
     }
@@ -334,6 +253,7 @@ fun Home(viewModel: HomeViewModel = hiltViewModel(),navController: NavController
                     moveToVoice = {
                     navController.navigate("voice")
                 }, onSearchMovie =  { query ->
+                        // 1.6 chuyen sang man hinh Search_MovieScreen
                         navController.navigate("search_movie/$query") })
             }
 
@@ -348,6 +268,8 @@ fun Home(viewModel: HomeViewModel = hiltViewModel(),navController: NavController
                 else -> {
 
                         item(key = "movie_list") {
+
+                            // 1.3 khoi tao cac movie_list
                             MovieHomes(
                                 state = movies,
                                 modifier = Modifier,
@@ -580,6 +502,7 @@ fun BoxRefresh() {
 
             ) {
                 items(count = 6, key = { index -> latestMovies.get(index).id }) { index ->
+
                     CardMovieBasic(movie = latestMovies.get(index), navController)
                 }
             }
@@ -642,6 +565,10 @@ fun BoxRefresh() {
     ) {
         val keyboardController = LocalSoftwareKeyboardController.current
 
+
+        //1.3 khoi tao TextField
+        //1.4 nhap thong tin tim kiem phim
+
         TextField(
             value = search,
             onValueChange = onChange,
@@ -673,6 +600,7 @@ fun BoxRefresh() {
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(
                 onDone = {
+
                     if (search.trim().isNotEmpty()) {
                         onSearchMovie(search.trim())
                     }

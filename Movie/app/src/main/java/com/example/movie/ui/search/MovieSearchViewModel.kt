@@ -27,10 +27,10 @@ class MovieSearchViewModel @Inject constructor(val repository: MovieSearchReposi
 
     private val _searchQuery = MutableStateFlow("")
 
-
     val searchMoviePagingFlow = _searchQuery
 
         .flatMapLatest { query ->
+            // 1.8 thuc hien  goi repository
             Log.d("search",query+"1")
             if (query.isBlank()) {
                 flowOf(PagingData.empty())
@@ -40,10 +40,10 @@ class MovieSearchViewModel @Inject constructor(val repository: MovieSearchReposi
         }
         .stateIn(viewModelScope, SharingStarted.Lazily, PagingData.empty())
 
+    // 1.10 nhan data tu api tra ve
 
     fun setQuery(query: String) {
         Log.d("searcc",query+"start")
-
         if(_searchQuery.value != query){
             _searchQuery.value = query
             Log.d("searcc",query)

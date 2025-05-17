@@ -42,6 +42,7 @@ import java.nio.charset.StandardCharsets
 @OptIn(UnstableApi::class)
 @Composable
 fun PlayMovieScreen(encodedLink: String, navController: NavController) {
+    //1.12 khoi tao giao dien PlayMovieScreen()
     val link = remember { URLDecoder.decode(encodedLink, StandardCharsets.UTF_8.toString()) }
     val context = LocalContext.current as Activity
     val window = context.window
@@ -56,6 +57,10 @@ fun PlayMovieScreen(encodedLink: String, navController: NavController) {
 //    WindowCompat.setDecorFitsSystemWindows(window, false)
     val trackSelector = remember { DefaultTrackSelector(context) }
 
+
+
+    //1.13 khoi tao ExoPlayer
+    //1.14 ExoPlayer load du lieu phim tu link
     val exoPlayer = remember {
         ExoPlayer.Builder(context).setTrackSelector(trackSelector).build().apply {
             val dataSourceFactory = DefaultHttpDataSource.Factory()
@@ -116,6 +121,7 @@ fun PlayMovieScreen(encodedLink: String, navController: NavController) {
         ) {
             if (isPlayerVisible) {
 
+                //1.14 hien thi phim len giao dien
                 AndroidView(
                     modifier = Modifier
                         .fillMaxSize()

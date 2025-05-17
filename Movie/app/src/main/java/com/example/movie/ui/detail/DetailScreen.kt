@@ -125,7 +125,9 @@ import java.nio.charset.StandardCharsets
     ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 
 @Composable
-fun DetailMovieScreen(slug: String,id:String , viewModel: MovieDetailViewModel = hiltViewModel(),navController: NavController,viewModelHistory:MovieHistoryViewmodel= hiltViewModel()) {
+fun DetailMovieScreen(slug: String,id:String ,
+                      //1.5 khoi tao viewmodel nhu controller
+                      viewModel: MovieDetailViewModel = hiltViewModel(),navController: NavController,viewModelHistory:MovieHistoryViewmodel= hiltViewModel()) {
 
 
     val stateMovie by viewModel.stateMovieDetail.collectAsState()
@@ -224,6 +226,7 @@ fun DetailMovieScreen(slug: String,id:String , viewModel: MovieDetailViewModel =
             when (stateMovie) {
 
                 is UiState.Default -> {
+                    // 1.6 goi phuong thuc getMovieDetailBySlug trong viewmodel
                     viewModel.getMovieDetailBySlug(slug,id,K.userCurrent?.uid)
                 }
                 is UiState.Loading -> {
@@ -242,11 +245,12 @@ fun DetailMovieScreen(slug: String,id:String , viewModel: MovieDetailViewModel =
 
 
                 is UiState.Success<MovieDetail> -> {
+                    //
                     val movie = (stateMovie as UiState.Success<MovieDetail>).data
-
                     DetailMovieView(movie = movie){
                             link ->
                         val encodedLink = URLEncoder.encode(link, StandardCharsets.UTF_8.toString())
+                        // 1.11 chuyen toi man hinh play phim
                         navController.navigate("play_movie/$encodedLink")
                         val movieHistory = Movie(movie.id,movie.name,movie.slug,movie.thumbUrl,movie.episodeCurrent,movie.poster)
                         viewModelHistory.save(movieHistory)
@@ -392,6 +396,7 @@ fun bottomViewDetail(modifier: Modifier,clickComment :() -> Unit,clickFavorite: 
 
 @Composable
 fun DetailMovieView(movie: MovieDetail,onClickChapterMovie :(String)->Unit) {
+    // 1.10 hien thi thong tin chi tiet phim
 
     var isLoadInfor by remember {
         mutableStateOf(true)
@@ -799,6 +804,8 @@ Column() {
 
 @Composable
 fun EpisodeViewItem(item: ServerData?,onClickChapterMovie :(String) -> Unit) {
+    // 1.11 goi phuong thuc onClickChapterMovie()
+
     Box(modifier = Modifier
         .size(30.dp)
         .background(color = Color.Blue, shape = RoundedCornerShape(5.dp))

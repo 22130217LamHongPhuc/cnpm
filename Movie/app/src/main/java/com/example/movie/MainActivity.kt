@@ -7,14 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
-import androidx.compose.animation.AnimatedContentScope
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -34,10 +27,8 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -50,7 +41,7 @@ import com.example.movie.ui.chatbot.ChatbotScreen
 import com.example.movie.ui.compile_type.CompileTypeScreen
 import com.example.movie.ui.detail.DetailMovieScreen
 import com.example.movie.ui.history.MovieHistoryScreen
-import com.example.movie.ui.home.HomeScreen
+import com.example.movie.ui.home.MainScreen
 import com.example.movie.ui.home.VoiceSearchScreen
 import com.example.movie.ui.play_movie.PlayMovieScreen
 import com.example.movie.ui.profile.ProfileScreen
@@ -67,11 +58,6 @@ import com.example.movie.ui.theme.Purple80
 import com.example.movie.ui.theme.PurpleGrey40
 import com.example.movie.ui.theme.PurpleGrey80
 import com.example.movie.ui.theme.Typography
-import com.example.movie.util.K
-import com.facebook.CallbackManager
-import com.facebook.FacebookSdk
-import com.facebook.FacebookSdk.getApplicationContext
-import com.facebook.appevents.AppEventsLogger
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -174,7 +160,7 @@ fun MovieNavGraph(navController: NavHostController,viewmodel: SiginViewmodel,act
     NavHost(navController = navController , startDestination = "home",
        ){
         composable("home"){
-            HomeScreen(navController = navController, navController_child = navController_child)
+            MainScreen(navController = navController, navController_child = navController_child)
         }
 
         composable("chatbot") {

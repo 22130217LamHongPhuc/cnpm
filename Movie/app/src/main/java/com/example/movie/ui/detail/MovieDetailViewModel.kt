@@ -40,17 +40,20 @@ class MovieDetailViewModel @Inject constructor(val repository: MovieDetailReposi
     var favoriteMovieDetail = _favoriteMovieDetail.asStateFlow()
 
 
-    fun getMovieDetailBySlug(slug:String,idMovie: String,idUser: String?){
+   fun getMovieDetailBySlug(slug:String,idMovie: String,idUser: String?){
 
         viewModelScope.launch {
 
             _stateMovieDetail.value =  UiState.Loading
 
           launch {
+              // 1.8 goi toi phuong thuc fetchMovieDetailBySlug() trong repository
               val movieDetail = repository.fetchMovieDetailBySlug(slug)
 
               if(movieDetail !=null){
                   Log.d("detail","ss")
+                  // 1.9 tra ve doi tuong moviedetail
+
                   _stateMovieDetail.value = UiState.Success(data = movieDetail )
               }else{
                   Log.d("detail","se")

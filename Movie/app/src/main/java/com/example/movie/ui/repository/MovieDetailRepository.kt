@@ -11,6 +11,7 @@ class MovieDetailRepository(val apiService: MovieApiService,val apiMapper: ApiMa
 
     suspend fun fetchMovieDetailBySlug(slug:String):MovieDetail?{
         try{
+            // 1,9  call api tu ben thu 3
             val movieDetailDto = apiService.getMovieBySlug(slug)
             return apiMapper.mapToDomain(movieDetailDto)
         } catch (e:Exception){

@@ -27,6 +27,7 @@ class MovieSearchPagingSource(val apiService: MovieApiService,
             val currentPage = params.key ?: 1
 
             Log.d("pagee","query "+currentPage.toString())
+            // 1.10  goi api tim kiem
 
             val movieDto = apiService.searchMovie(keyword,currentPage)
             Log.d("ssss", movieDto?.data?.breadCrumb?.get(0)?.name ?: "noo")

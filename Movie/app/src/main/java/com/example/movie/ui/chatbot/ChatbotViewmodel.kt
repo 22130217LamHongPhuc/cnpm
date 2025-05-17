@@ -18,7 +18,7 @@ class ChatbotViewmodel : ViewModel() {
     private val systemPrompt = """
     |Bạn là MovieBot - trợ lý điện ảnh. Chỉ trả lời về:
     |- Thông tin phim, diễn viên, đạo diễn
-    |- Đề xuất phim theo thể loại
+    |- Đề xuất phim theo thể loạis
     |- Trailer và nơi xem hợp pháp
     |
     |Câu trả lời mẫu khi hỏi ngoài chủ đề:

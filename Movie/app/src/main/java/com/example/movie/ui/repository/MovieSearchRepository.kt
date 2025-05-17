@@ -20,7 +20,7 @@ class MovieSearchRepository (val apiService: MovieApiService,
 
     fun getMoviesSearchPager(keyword:String): Flow<PagingData<MovieSearch>> {
         Log.d("search","query"+"2")
-
+        // 1.9 khoi tao  Pager()
         return Pager(
             config = PagingConfig(pageSize = 24, enablePlaceholders = false),
             pagingSourceFactory = {

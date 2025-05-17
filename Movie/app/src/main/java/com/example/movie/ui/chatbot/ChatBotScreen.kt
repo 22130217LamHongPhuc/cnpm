@@ -52,6 +52,7 @@ import kotlinx.coroutines.delay
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun ChatbotScreen(vm: ChatbotViewmodel = hiltViewModel()) {
+    //1.3 khoi tao viewmodel
 
     val messages by vm.chat.collectAsState()
     val isLoading by vm.isLoading.collectAsState()
@@ -65,7 +66,7 @@ fun ChatbotScreen(vm: ChatbotViewmodel = hiltViewModel()) {
         iterations = LottieConstants.IterateForever
     )
 
-    //1.3 hien thi giao dien chatbox
+    //1.4 hien thi giao dien chatbox
 
     Column(
         modifier = Modifier
